@@ -5,8 +5,12 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
+    "inspect": "mcp-inspector node build/index.js",
+    "inspect:dev": "mcp-inspector ts-node src/index.ts",
     "start": "node build/index.js",
     "dev": "nodemon src/index.ts",
+    "nodemon": "nodemon",
+    "mcp-dev": "nodemon --watch src -e ts --exec \"tsc && node build/index.js\"",
     "test": "jest"
   },
   "keywords": [],
@@ -22,6 +26,8 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@modelcontextprotocol/inspector": "^0.4.1",
+    "@types/express": "^5.0.0",
     "@types/node": "^22.13.5",
     "jest": "^29.7.0",
     "nodemon": "^3.1.9",
