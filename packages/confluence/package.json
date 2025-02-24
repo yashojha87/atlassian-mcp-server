@@ -1,0 +1,24 @@
+{
+  "name": "@atlassian-dc-mcp/confluence",
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js",
+    "dev": "nodemon src/index.ts",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@atlassian-dc-mcp/common": "^1.0.0",
+    "@modelcontextprotocol/sdk": "^1.5.0",
+    "dotenv": "^16.4.7",
+    "node-fetch": "^3.3.2",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/inspector": "^0.4.1",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2"
+  }
+}
