@@ -2,6 +2,7 @@
   "name": "atlassian-dc-mcp",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "workspaces": [
     "packages/*"
   ],
@@ -10,11 +11,14 @@
     "test": "npm run test --workspaces",
     "dev:jira": "npm run dev --workspace=@atlassian-dc-mcp/jira",
     "dev:confluence": "npm run dev --workspace=@atlassian-dc-mcp/confluence",
-    "dev:bitbucket": "npm run dev --workspace=@atlassian-dc-mcp/bitbucket"
+    "dev:bitbucket": "npm run dev --workspace=@atlassian-dc-mcp/bitbucket",
+    "debug": "node mcp-live-debug.js",
+    "debug:verbose": "node mcp-live-debug.js --verbose"
   },
   "devDependencies": {
     "@types/node": "^22.13.5",
     "jest": "^29.7.0",
+    "nodemon": "^3.1.0",
     "typescript": "^5.7.3"
   }
 }

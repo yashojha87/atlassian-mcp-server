@@ -9,6 +9,7 @@
     "inspect:dev": "mcp-inspector ts-node src/index.ts",
     "start": "node build/index.js",
     "dev": "nodemon src/index.ts",
+    "nodemon": "nodemon",
     "test": "jest"
   },
   "dependencies": {
