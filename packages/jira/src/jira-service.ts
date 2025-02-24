@@ -1,5 +1,6 @@
 import JiraClient from 'jira-client';
 import { z } from 'zod';
+import { extractJiraDataForLLM } from './jira-issue-mapper.js';
 
 // Type definitions for JIRA responses
 interface JiraIssueResponse {
@@ -40,15 +41,7 @@ export class JiraService {
   }
 
   private formatIssueResponse(issue: JiraIssueResponse) {
-    return {
-      key: issue.key,
-      summary: issue.fields.summary,
-      status: issue.fields.status.name,
-      description: issue.fields.description,
-      created: issue.fields.created,
-      updated: issue.fields.updated,
-      assignee: issue.fields.assignee?.displayName ?? 'Unassigned'
-    };
+    return extractJiraDataForLLM(issue);
   }
 
   async searchIssues(jql: string, maxResults: number = 10) {
@@ -68,7 +61,7 @@ export class JiraService {
 
   async getIssue(issueKey: string) {
     try {
-      const issue = await this.client.findIssue(issueKey) as JiraIssueResponse;
+      const issue = await this.client.getIssue(issueKey) as JiraIssueResponse;
       return {
         success: true,
         data: this.formatIssueResponse(issue)

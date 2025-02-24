@@ -7,7 +7,6 @@ if (missingEnvVars.length > 0) {
   throw new Error(`Missing required environment variables: ${missingEnvVars.join(', ')}`);
 }
 
-// Initialize JIRA service
 const jiraService = new JiraService(
   process.env.JIRA_HOST!,
   process.env.JIRA_API_TOKEN!

@@ -8,7 +8,7 @@
     "inspect": "mcp-inspector node build/index.js",
     "inspect:dev": "mcp-inspector ts-node src/index.ts",
     "start": "node build/index.js",
-    "dev": "nodemon src/index.ts",
+    "dev": "nodemon",
     "nodemon": "nodemon",
     "test": "jest"
   },
