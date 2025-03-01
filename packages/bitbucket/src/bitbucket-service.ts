@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { OpenAPI, ProjectService } from './bitbucket-client/index.js';
+import { OpenAPI, ProjectService, RepositoryService } from './bitbucket-client/index.js';
 
 export class BitbucketService {
   constructor(host: string, token: string) {
@@ -7,6 +7,47 @@ export class BitbucketService {
     OpenAPI.BASE = `https://${host}/rest`;
     OpenAPI.TOKEN = token;
     OpenAPI.VERSION = '1.0';
+  }
+
+  /**
+   * Get commits for a repository
+   * @param projectKey The project key
+   * @param repositorySlug The repository slug
+   * @param path Optional path to filter commits by
+   * @param since Optional commit ID to retrieve commits after
+   * @param until Optional commit ID to retrieve commits before
+   * @param limit Optional pagination limit (default: 25)
+   * @returns Promise with commits data
+   */
+  async getCommits(projectKey: string, repositorySlug: string, path?: string, since?: string, until?: string, limit: number = 25) {
+    try {
+      const response = await RepositoryService.getCommits(
+        projectKey, 
+        repositorySlug, 
+        undefined, // avatarScheme
+        path,
+        undefined, // withCounts
+        undefined, // followRenames
+        until,
+        undefined, // avatarSize
+        since,
+        undefined, // merges
+        undefined, // ignoreMissing
+        0, // start
+        limit
+      );
+      return {
+        success: true,
+        data: response
+      };
+    } catch (error) {
+      return {
+        success: false,
+        data: {
+          message: `Error fetching commits: ${error instanceof Error ? error.message : String(error)}`
+        }
+      };
+    }
   }
 
   /**
@@ -127,5 +168,13 @@ export const bitbucketToolSchemas = {
   getRepository: {
     projectKey: z.string().describe("The project key"),
     repositorySlug: z.string().describe("The repository slug")
+  },
+  getCommits: {
+    projectKey: z.string().describe("The project key"),
+    repositorySlug: z.string().describe("The repository slug"),
+    path: z.string().optional().describe("Optional path to filter commits by"),
+    since: z.string().optional().describe("The commit ID (exclusively) to retrieve commits after"),
+    until: z.string().optional().describe("The commit ID (inclusively) to retrieve commits before"),
+    limit: z.number().optional().default(25).describe("Number of items to return")
   }
 };

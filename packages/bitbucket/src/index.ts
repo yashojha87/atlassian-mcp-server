@@ -65,4 +65,14 @@ server.tool(
   }
 );
 
+server.tool(
+  "bitbucket_getCommits",
+  "Get commits for a Bitbucket repository",
+  bitbucketToolSchemas.getCommits,
+  async ({ projectKey, repositorySlug, path, since, until, limit }) => {
+    const result = await bitbucketService.getCommits(projectKey, repositorySlug, path, since, until, limit);
+    return formatToolResponse(result);
+  }
+);
+
 await connectServer(server);
