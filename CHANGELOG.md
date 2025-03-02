@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.3](https://github.com/b1ff/atlassian-dc-mcp/compare/v0.1.2...v0.1.3) (2025-03-02)
+
+
+### Bug Fixes
+
+* correct bin configurations and the relative paths. ([0bed1aa](https://github.com/b1ff/atlassian-dc-mcp/commit/0bed1aa86e94a1d0d589b43d1c50fad55025eb2c))
+
+
+
+
+
 ## 0.1.2 (2025-03-02)
 
 
