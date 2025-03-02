@@ -15,12 +15,17 @@
     "debug": "node mcp-live-debug.js",
     "debug:verbose": "node mcp-live-debug.js --verbose",
     "debug:ts": "nodemon --exec ts-node --esm",
-    "publish": "npm publish -w packages/* --access public"
+    "publish": "semantic-release"
   },
   "devDependencies": {
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/github": "^11.0.1",
+    "@semantic-release/npm": "^12.0.1",
+    "@semantic-release/release-notes-generator": "^14.0.3",
     "@types/node": "^22.13.5",
     "jest": "^29.7.0",
     "nodemon": "^3.1.9",
+    "semantic-release": "^24.2.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   }
