@@ -2,10 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import FormData from 'form-data';
-import fetch, { Headers } from 'node-fetch';
-import type { RequestInit, Response } from 'node-fetch';
-
 import { ApiError } from './ApiError.js';
 import type { ApiRequestOptions } from './ApiRequestOptions.js';
 import type { ApiResult } from './ApiResult.js';
