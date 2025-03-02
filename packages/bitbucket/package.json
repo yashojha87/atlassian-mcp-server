@@ -3,9 +3,7 @@
   "version": "0.1.2",
   "main": "build/index.js",
   "type": "module",
-  "bin": {
-    "atlassian-dc-mcp-bitbucket": "./bin/run.js"
-  },
+  "bin": "./bin/run.js",
   "private": false,
   "scripts": {
     "build": "tsc",
