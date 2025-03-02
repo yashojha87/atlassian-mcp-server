@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6](https://github.com/b1ff/atlassian-dc-mcp/compare/v0.1.5...v0.1.6) (2025-03-02)
+
+
+### Bug Fixes
+
+* trigger jira re-build and publish. ([02454af](https://github.com/b1ff/atlassian-dc-mcp/commit/02454affd0e286675dca30523d9f47d6ef2dcc29))
+
+
+
+
+
 ## [0.1.5](https://github.com/b1ff/atlassian-dc-mcp/compare/v0.1.4...v0.1.5) (2025-03-02)
 
 
