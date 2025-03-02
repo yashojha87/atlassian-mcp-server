@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5](https://github.com/b1ff/atlassian-dc-mcp/compare/v0.1.4...v0.1.5) (2025-03-02)
+
+
+### Bug Fixes
+
+* **bitbucket:** remove dependencies from node-fetch polyfill since it is supported by node natively ([6268835](https://github.com/b1ff/atlassian-dc-mcp/commit/6268835a4ef80009b78f42dca073a04e0aca61e4))
+
+
+
+
+
 ## [0.1.4](https://github.com/b1ff/atlassian-dc-mcp/compare/v0.1.3...v0.1.4) (2025-03-02)
 
 **Note:** Version bump only for package @atlassian-dc-mcp/bitbucket
