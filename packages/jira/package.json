@@ -4,7 +4,7 @@
   "main": "build/index.js",
   "type": "module",
   "bin": {
-    "atlassian-dc-mcp-jira": "./build/index.js"
+    "atlassian-dc-mcp-jira": "./bin/run.js"
   },
   "private": false,
   "scripts": {
