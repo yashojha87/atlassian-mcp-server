@@ -28,5 +28,9 @@
     "@types/jira-client": "^7.1.9",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "21ea555d7c02461cde3bab32a4b75c6c6a94e927"
 }
