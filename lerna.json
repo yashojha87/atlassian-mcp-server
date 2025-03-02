@@ -6,5 +6,6 @@
   ],
   "conventionalCommits": true,
   "allowBranch": "master",
-  "verbose": true
+  "verbose": true,
+  "createRelease": "github"
 }
