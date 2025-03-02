@@ -2,6 +2,70 @@
 
 This project provides a Model Context Protocol (MCP) integration for Atlassian Data Center products, including Jira, Confluence, and Bitbucket.
 
+## Claude Desktop Configuration
+
+To use these MCP connectors with Claude Desktop, add the following to your Claude Desktop configuration:
+Set `*_HOST` variables only to domain + port without protocol (e.g., `your-instance.atlassian.net`). The https protocol is assumed.
+You can leave only the services you need in the configuration.
+
+```json
+{
+  "mcpServers": {
+    "atlassian-jira-dc": {
+      "command": "npx",
+      "args": ["@atlassian-dc-mcp/jira"],
+      "env": {
+        "JIRA_HOST": "your-jira-host",
+        "JIRA_API_TOKEN": "your-token"
+      }
+    },
+    "atlassian-confluence-dc": {
+      "command": "npx",
+      "args": ["@atlassian-dc-mcp/confluence"],
+      "env": {
+        "CONFLUENCE_HOST": "your-confluence-host",
+        "CONFLUENCE_API_TOKEN": "your-token"
+      }
+    },
+    "atlassian-bitbucket-dc": {
+      "command": "npx",
+      "args": ["@atlassian-dc-mcp/bitbucket"],
+      "env": {
+        "BITBUCKET_HOST": "your-bitbucket-host",
+        "BITBUCKET_API_TOKEN": "your-token"
+      }
+    }
+  }
+}
+```
+
+### Generating API Tokens
+
+For Data Center installations, you'll need to generate Personal Access Tokens (PAT) for each service:
+
+#### Jira Data Center
+1. Log in to your Jira instance
+2. Go to Profile > Personal Access Tokens
+3. Click "Create token"
+4. Give it a meaningful name and set appropriate permissions
+5. Copy the generated token immediately (it won't be shown again)
+
+#### Confluence Data Center
+1. Log in to your Confluence instance
+2. Go to Settings > Personal Access Tokens
+3. Click "Create token"
+4. Name your token and set required permissions
+5. Save and copy the token (only shown once)
+
+#### Bitbucket Data Center
+1. Log in to Bitbucket
+2. Go to Personal Settings > Personal access tokens
+3. Click "Create token"
+4. Set a name and permissions
+5. Generate and copy the token immediately
+
+Store these tokens securely and use them in your Claude Desktop configuration as shown above.
+
 ## Overview
 
 The Atlassian DC MCP allows AI assistants to interact with Atlassian products through a standardized interface. It provides tools for:
