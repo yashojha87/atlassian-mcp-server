@@ -119,4 +119,17 @@ server.tool(
   }
 );
 
+server.tool('confluence_searchSpace',
+  'Search for spaces in Confluence',
+  confluenceToolSchemas.searchSpaces,
+  async ({
+           searchText,
+           limit,
+           start,
+           expand
+         }) => {
+    const result = await confluenceService.searchSpaces(searchText, limit, start, expand);
+    return formatToolResponse(result);
+  });
+
 await connectServer(server);

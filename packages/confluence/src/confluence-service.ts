@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { OpenAPI, SearchService } from './confluence-client/index.js';
+import { ContentResourceService, OpenAPI, SearchService, SpaceService } from './confluence-client/index.js';
 
 export interface ConfluenceContent {
   id?: string;
@@ -22,73 +22,22 @@ export interface ConfluenceContent {
 }
 
 export class ConfluenceService {
-  private baseUrl: string;
-  private token: string;
-
   constructor(host: string, token: string) {
-    this.baseUrl = `https://${host}/rest/api`;
-    this.token = token;
     OpenAPI.BASE = `https://${host}`;
     OpenAPI.TOKEN = token;
     OpenAPI.VERSION = '1.0';
   }
-
-  private async request<T>(endpoint: string, options: any = {}): Promise<{ success: boolean; data?: T; error?: string }> {
-    const url = `${this.baseUrl}${endpoint}`;
-    const headers = {
-      'Authorization': `Bearer ${this.token}`,
-      'Content-Type': 'application/json',
-      ...options.headers
-    };
-
-    try {
-      const response = await fetch(url, {
-        ...options,
-        headers
-      });
-
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        return {
-          success: false,
-          error: `Confluence API error: ${response.status} ${response.statusText}`,
-          data: responseData
-        };
-      }
-
-      return {
-        success: true,
-        data: responseData
-      };
-    } catch (error) {
-      if (error instanceof Error) {
-        return {
-          success: false,
-          error: `Confluence API Error: ${error.message}`
-        };
-      }
-      return {
-        success: false,
-        error: 'Unknown Confluence API error occurred'
-      };
-    }
-  }
-
   /**
    * Get a Confluence page by ID
    * @param contentId The ID of the page to retrieve
    * @param expand Optional comma-separated list of properties to expand
    */
   async getContent(contentId: string, expand?: string) {
-    // Default expand to include body.storage to get the content
     const expandValue = expand || 'body.storage';
-    // If expand is provided but doesn't include body.storage, add it
     const finalExpand = expand && !expand.includes('body.storage')
       ? `${expand},body.storage`
       : expandValue;
-
-    return this.request(`/content/${contentId}?expand=${finalExpand}`);
+    return this.handleApiOperation(() => ContentResourceService.getContentById(contentId, finalExpand), 'Error getting content');
   }
 
   /**
@@ -99,14 +48,10 @@ export class ConfluenceService {
    * @param expand Optional comma-separated list of properties to expand
    */
   async searchContent(cql: string, limit?: number, start?: number, expand?: string) {
-    try {
-      return await SearchService.search1(undefined, expand, undefined, limit?.toString(), start?.toString(), undefined,  cql);
-    } catch (e) {
-      return {
-        success: false,
-        error: `Error searching for content: ${e instanceof Error ? e.message : String(e)}`
-      };
-    }
+    return this.handleApiOperation(
+      () => SearchService.search1(undefined, expand, undefined, limit?.toString(), start?.toString(), undefined, cql),
+      'Error searching for content'
+    );
   }
 
   /**
@@ -114,10 +59,7 @@ export class ConfluenceService {
    * @param content The content object to create
    */
   async createContent(content: ConfluenceContent) {
-    return this.request('/content', {
-      method: 'POST',
-      body: JSON.stringify(content)
-    });
+    return this.handleApiOperation(() => ContentResourceService.createContent(content), 'Error creating content');
   }
 
   /**
@@ -126,15 +68,58 @@ export class ConfluenceService {
    * @param content The updated content object
    */
   async updateContent(contentId: string, content: ConfluenceContent) {
-    return this.request(`/content/${contentId}`, {
-      method: 'PUT',
-      body: JSON.stringify(content)
-    });
+    return this.handleApiOperation(() => ContentResourceService.update2(contentId, content), 'Error updating content');
+  }
+
+  /**
+   * Search for spaces by text
+   * @param searchText Text to search for in space names or descriptions
+   * @param limit Maximum number of results to return
+   * @param start Start index for pagination
+   * @param expand Optional comma-separated list of properties to expand
+   */
+  async searchSpaces(searchText: string, limit?: number, start?: number, expand?: string) {
+    // Create a CQL query that searches for spaces
+    // The correct syntax for space search is: type=space AND title ~ "searchText"
+    const cql = `type=space AND title ~ "${searchText}"`;
+
+    return this.handleApiOperation(
+      () => SearchService.search1(
+        undefined,
+        expand,
+        undefined,
+        limit?.toString(),
+        start?.toString(),
+        undefined,
+        cql
+      ),
+      'Error searching for spaces'
+    );
   }
 
   static validateConfig(): string[] {
     const requiredEnvVars = ['CONFLUENCE_HOST', 'CONFLUENCE_API_TOKEN'] as const;
     return requiredEnvVars.filter(varName => !process.env[varName]);
+  }
+
+  /**
+   * Handle API errors in a consistent way
+   * @param operation Function that performs the API operation
+   * @param errorPrefix Prefix for the error message
+   */
+  private async handleApiOperation<T>(operation: () => Promise<T>, errorPrefix: string): Promise<{ success: boolean; data?: T; error?: string }> {
+    try {
+      const data = await operation();
+      return {
+        success: true,
+        data
+      };
+    } catch (e) {
+      return {
+        success: false,
+        error: `${errorPrefix}: ${e instanceof Error ? e.message : String(e)}`
+      };
+    }
   }
 }
 
@@ -162,5 +147,11 @@ export const confluenceToolSchemas = {
     content: z.string().optional().describe("New content body in storage format"),
     version: z.number().describe("New version number (must be incremented)"),
     versionComment: z.string().optional().describe("Comment for this version")
+  },
+  searchSpaces: {
+    searchText: z.string().describe("Text to search for in space names or descriptions"),
+    limit: z.number().optional().describe("Maximum number of results to return"),
+    start: z.number().optional().describe("Start index for pagination"),
+    expand: z.string().optional().describe("Comma-separated list of properties to expand")
   }
 };
