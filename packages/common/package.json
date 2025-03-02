@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "main": "build/index.js",
   "type": "module",
+  "private": false,
   "scripts": {
     "build": "tsc",
     "test": "jest",

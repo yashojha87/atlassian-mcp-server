@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "main": "build/index.js",
   "type": "module",
+  "bin": {
+    "atlassian-dc-mcp-confluence": "./build/index.js"
+  },
+  "private": false,
   "scripts": {
     "build": "tsc",
     "start": "node build/index.js",

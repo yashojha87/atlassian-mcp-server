@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "main": "build/index.js",
   "type": "module",
+  "bin": {
+    "atlassian-dc-mcp-jira": "./build/index.js"
+  },
+  "private": false,
   "scripts": {
     "build": "tsc",
     "inspect": "mcp-inspector node build/index.js",
