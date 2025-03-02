@@ -3,5 +3,8 @@
   "version": "0.1.1",
   "packages": [
     "packages/*"
-  ]
+  ],
+  "conventionalCommits": true,
+  "allowBranch": "master",
+  "verbose": true
 }
