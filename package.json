@@ -15,7 +15,7 @@
     "debug": "node mcp-live-debug.js",
     "debug:verbose": "node mcp-live-debug.js --verbose",
     "debug:ts": "nodemon --exec ts-node --esm",
-    "publish": "semantic-release"
+    "publish": "lerna version --conventional-commits --yes && lerna publish from-git --yes"
   },
   "devDependencies": {
     "@types/node": "^22.13.5",
