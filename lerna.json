@@ -10,5 +10,10 @@
   "createRelease": "github",
   "npmClientArgs": [
     "--no-package-lock"
-  ]
+  ],
+  "command": {
+    "version": {
+      "ignoreChanges": ["**/run.js"]
+    }
+  }
 }
