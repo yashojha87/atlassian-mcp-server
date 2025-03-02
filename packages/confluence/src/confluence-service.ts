@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { OpenAPI, SearchService } from './confluence-client/index.js';
 
 export interface ConfluenceContent {
   id?: string;
@@ -27,6 +28,9 @@ export class ConfluenceService {
   constructor(host: string, token: string) {
     this.baseUrl = `https://${host}/rest/api`;
     this.token = token;
+    OpenAPI.BASE = `https://${host}`;
+    OpenAPI.TOKEN = token;
+    OpenAPI.VERSION = '1.0';
   }
 
   private async request<T>(endpoint: string, options: any = {}): Promise<{ success: boolean; data?: T; error?: string }> {
@@ -80,10 +84,10 @@ export class ConfluenceService {
     // Default expand to include body.storage to get the content
     const expandValue = expand || 'body.storage';
     // If expand is provided but doesn't include body.storage, add it
-    const finalExpand = expand && !expand.includes('body.storage') 
-      ? `${expand},body.storage` 
+    const finalExpand = expand && !expand.includes('body.storage')
+      ? `${expand},body.storage`
       : expandValue;
-      
+
     return this.request(`/content/${contentId}?expand=${finalExpand}`);
   }
 
@@ -95,14 +99,14 @@ export class ConfluenceService {
    * @param expand Optional comma-separated list of properties to expand
    */
   async searchContent(cql: string, limit?: number, start?: number, expand?: string) {
-    let queryParams = new URLSearchParams();
-    queryParams.append('cql', cql);
-
-    if (limit) queryParams.append('limit', limit.toString());
-    if (start) queryParams.append('start', start.toString());
-    if (expand) queryParams.append('expand', expand);
-
-    return this.request(`/content/search?${queryParams.toString()}`);
+    try {
+      return await SearchService.search1(undefined, expand, undefined, limit?.toString(), start?.toString(), undefined,  cql);
+    } catch (e) {
+      return {
+        success: false,
+        error: `Error searching for content: ${e instanceof Error ? e.message : String(e)}`
+      };
+    }
   }
 
   /**
