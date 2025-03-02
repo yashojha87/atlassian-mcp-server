@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/b1ff/atlassian-dc-mcp/compare/v0.1.6...v0.2.0) (2025-03-02)
+
+
+### Features
+
+* **confluence:** switched to generated client and added ability to search spaces by text. ([e423671](https://github.com/b1ff/atlassian-dc-mcp/commit/e4236719b6fc7b7a9122c910496376e12b7e9a97))
+
+
+
+
+
 ## [0.1.4](https://github.com/b1ff/atlassian-dc-mcp/compare/v0.1.3...v0.1.4) (2025-03-02)
 
 **Note:** Version bump only for package @atlassian-dc-mcp/confluence
