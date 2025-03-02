@@ -4,9 +4,24 @@ This project provides a Model Context Protocol (MCP) integration for Atlassian D
 
 ## Claude Desktop Configuration
 
-To use these MCP connectors with Claude Desktop, add the following to your Claude Desktop configuration:
+[Official Anthropic quick start guide](https://modelcontextprotocol.io/quickstart/user)
+
+To use these MCP connectors with Claude Desktop, add the following to your Claude Desktop configuration.
+
 Set `*_HOST` variables only to domain + port without protocol (e.g., `your-instance.atlassian.net`). The https protocol is assumed.
+
 You can leave only the services you need in the configuration.
+
+macOS: 
+```
+~/Library/Application Support/Claude/claude_desktop_config.json
+```
+
+Windows: 
+```
+%APPDATA%\Claude\claude_desktop_config.json
+```
+
 
 ```json
 {
@@ -59,7 +74,7 @@ For Data Center installations, you'll need to generate Personal Access Tokens (P
 
 #### Bitbucket Data Center
 1. Log in to Bitbucket
-2. Go to Personal Settings > Personal access tokens
+2. Go to Manage Account > HTTP access tokens
 3. Click "Create token"
 4. Set a name and permissions
 5. Generate and copy the token immediately
