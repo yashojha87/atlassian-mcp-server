@@ -7,5 +7,6 @@
   "conventionalCommits": true,
   "allowBranch": "master",
   "verbose": true,
-  "createRelease": "github"
+  "createRelease": "github",
+  "npmClientArgs": ["--no-package-lock"]
 }
