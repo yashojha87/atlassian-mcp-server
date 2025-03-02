@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build --workspaces",
+    "build": "npm run build --workspace=@atlassian-dc-mcp/common && npm run build --workspaces",
     "test": "npm run test --workspaces",
     "dev:jira": "npm run dev --workspace=@atlassian-dc-mcp/jira",
     "dev:confluence": "npm run dev --workspace=@atlassian-dc-mcp/confluence",
