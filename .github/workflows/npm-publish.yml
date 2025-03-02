@@ -37,10 +37,11 @@ jobs:
         run: npm ci
       - name: Build packages
         run: npm run build
-      - name: Setup Git Identity
+      - name: Configure Git
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
+          git config --global core.autocrlf false
       - name: Version and Publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
