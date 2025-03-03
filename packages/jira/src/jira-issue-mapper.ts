@@ -1,4 +1,3 @@
-// Define the types for the simplified JIRA issue
 interface SimplifiedUser {
   displayName: string;
   emailAddress: string;
