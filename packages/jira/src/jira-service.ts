@@ -37,7 +37,7 @@ export class JiraService {
     summary: string;
     description: string;
     issueTypeId: string;
-    customFields?: Record<string, any>;
+    customFields?: Record<string, any> | string;
   }) {
     return handleApiOperation(async () => {
       const fields: Record<string, any> = {
@@ -47,11 +47,32 @@ export class JiraService {
         issuetype: { id: params.issueTypeId }
       };
 
-      // Add any custom fields if provided
+      // Handle custom fields
       if (params.customFields) {
-        Object.entries(params.customFields).forEach(([fieldId, value]) => {
-          fields[fieldId] = value;
-        });
+        try {
+          // If customFields is a string, try to parse it as JSON
+          const customFieldsObj = typeof params.customFields === 'string' 
+            ? JSON.parse(params.customFields) 
+            : params.customFields;
+          
+          // Make sure customFieldsObj is an object, not an array
+          if (customFieldsObj && typeof customFieldsObj === 'object' && !Array.isArray(customFieldsObj)) {
+            // Add all custom fields to the fields object
+            Object.entries(customFieldsObj).forEach(([fieldId, value]) => {
+              // Ensure the field ID is properly formatted (should be something like "customfield_10001")
+              if (fieldId && typeof fieldId === 'string' && !fieldId.match(/^\d+$/)) {
+                fields[fieldId] = value;
+              } else {
+                console.warn(`Skipping invalid custom field ID: ${fieldId}`);
+              }
+            });
+          } else {
+            console.warn('customFields must be an object, not an array');
+          }
+        } catch (error) {
+          console.error('Error processing custom fields:', error);
+          // Continue with the request without custom fields
+        }
       }
 
       return IssueService.createIssue(true, { fields });
@@ -93,6 +114,9 @@ export const jiraToolSchemas = {
     summary: z.string().describe("Issue summary"),
     description: z.string().describe("Issue description in the format suitable for JIRA DATA CENTER edition (JIRA Wiki Markup)."),
     issueTypeId: z.string().describe("Issue type id (e.g. id of Task, Bug, Story). Should be found first a correct number for specific JIRA installation."),
-    customFields: z.record(z.any()).optional().describe("Custom fields in the format of { fieldId: value } where fieldId is the custom field ID (e.g., 'customfield_10001')")
+    customFields: z.union([
+      z.record(z.any()).optional().describe("Custom fields in the format of { fieldId: value } where fieldId is the custom field ID (e.g., 'customfield_10001')"),
+      z.string().optional().describe("Custom fields as a JSON string in the format of { \"fieldId\": value } where fieldId is the custom field ID (e.g., 'customfield_10001')")
+    ])
   }
 };

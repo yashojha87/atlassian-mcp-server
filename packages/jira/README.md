@@ -116,9 +116,9 @@ Parameters:
 - `summary` (string, required): Issue summary
 - `description` (string, required): Issue description in format suitable for JIRA Data Center edition (JIRA Wiki Markup)
 - `issueTypeId` (string, required): ID of the issue type
-- `customFields` (object, optional): Custom fields in the format of { fieldId: value } where fieldId is the custom field ID (e.g., 'customfield_10001')
+- `customFields` (object or string, optional): Custom fields either as an object or as a JSON string (for MCP inspector testing)
 
-Example with custom fields:
+Example with custom fields as an object:
 ```json
 {
   "projectId": "PROJECT",
@@ -130,6 +130,17 @@ Example with custom fields:
     "customfield_10011": { "id": "10000" },
     "customfield_10012": ["value1", "value2"]
   }
+}
+```
+
+Example with custom fields as a JSON string (for MCP inspector testing):
+```json
+{
+  "projectId": "PROJECT",
+  "summary": "Issue summary",
+  "description": "Issue description",
+  "issueTypeId": "10001",
+  "customFields": "{\"customfield_10010\":\"Value for custom field 10010\",\"customfield_10011\":{\"id\":\"10000\"},\"customfield_10012\":[\"value1\",\"value2\"]}"
 }
 ```
 
