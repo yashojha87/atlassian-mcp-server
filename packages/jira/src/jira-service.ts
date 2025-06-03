@@ -37,16 +37,24 @@ export class JiraService {
     summary: string;
     description: string;
     issueTypeId: string;
+    customFields?: Record<string, any>;
   }) {
     return handleApiOperation(async () => {
-      return IssueService.createIssue(true, {
-        fields: {
-          project: { key: params.projectId },
-          summary: params.summary,
-          description: params.description,
-          issuetype: { id: params.issueTypeId }
-        }
-      })
+      const fields: Record<string, any> = {
+        project: { key: params.projectId },
+        summary: params.summary,
+        description: params.description,
+        issuetype: { id: params.issueTypeId }
+      };
+
+      // Add any custom fields if provided
+      if (params.customFields) {
+        Object.entries(params.customFields).forEach(([fieldId, value]) => {
+          fields[fieldId] = value;
+        });
+      }
+
+      return IssueService.createIssue(true, { fields });
     }, 'Error creating issue');
   }
 
@@ -84,6 +92,7 @@ export const jiraToolSchemas = {
     projectId: z.string().describe("Project id"),
     summary: z.string().describe("Issue summary"),
     description: z.string().describe("Issue description in the format suitable for JIRA DATA CENTER edition (JIRA Wiki Markup)."),
-    issueTypeId: z.string().describe("Issue type id (e.g. id of Task, Bug, Story). Should be found first a correct number for specific JIRA installation.")
+    issueTypeId: z.string().describe("Issue type id (e.g. id of Task, Bug, Story). Should be found first a correct number for specific JIRA installation."),
+    customFields: z.record(z.any()).optional().describe("Custom fields in the format of { fieldId: value } where fieldId is the custom field ID (e.g., 'customfield_10001')")
   }
 };
