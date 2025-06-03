@@ -73,7 +73,18 @@ server.tool(
     const result = await jiraService.postIssueComment(issueKey, comment);
     return formatToolResponse(result);
   }
-)
+);
+
+// Add update JIRA issue tool
+server.tool(
+  "jira_updateIssue",
+  `Update an existing JIRA issue in the ${jiraInstanceType}`,
+  jiraToolSchemas.updateIssue,
+  async (params) => {
+    const result = await jiraService.updateIssue(params.issueKey, params);
+    return formatToolResponse(result);
+  }
+);
 
 // Connect the server after all tools are registered
 await connectServer(server);

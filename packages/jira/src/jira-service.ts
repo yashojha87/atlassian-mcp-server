@@ -37,7 +37,7 @@ export class JiraService {
     summary: string;
     description: string;
     issueTypeId: string;
-    customFields?: Record<string, any> | string;
+    fields?: Record<string, any> | string;
   }) {
     return handleApiOperation(async () => {
       const fields: Record<string, any> = {
@@ -47,36 +47,79 @@ export class JiraService {
         issuetype: { id: params.issueTypeId }
       };
 
-      // Handle custom fields
-      if (params.customFields) {
+      // Add fields if provided
+      if (params.fields) {
         try {
-          // If customFields is a string, try to parse it as JSON
-          const customFieldsObj = typeof params.customFields === 'string' 
-            ? JSON.parse(params.customFields) 
-            : params.customFields;
+          // Parse fields if it's a string
+          const fieldsObj = typeof params.fields === 'string'
+            ? JSON.parse(params.fields)
+            : params.fields;
           
-          // Make sure customFieldsObj is an object, not an array
-          if (customFieldsObj && typeof customFieldsObj === 'object' && !Array.isArray(customFieldsObj)) {
-            // Add all custom fields to the fields object
-            Object.entries(customFieldsObj).forEach(([fieldId, value]) => {
-              // Ensure the field ID is properly formatted (should be something like "customfield_10001")
-              if (fieldId && typeof fieldId === 'string' && !fieldId.match(/^\d+$/)) {
-                fields[fieldId] = value;
-              } else {
-                console.warn(`Skipping invalid custom field ID: ${fieldId}`);
-              }
-            });
-          } else {
-            console.warn('customFields must be an object, not an array');
-          }
+          Object.entries(fieldsObj).forEach(([fieldId, value]) => {
+            // Don't override the standard fields we've already set
+            if (!['project', 'summary', 'description', 'issuetype'].includes(fieldId)) {
+              fields[fieldId] = value;
+            }
+          });
         } catch (error) {
-          console.error('Error processing custom fields:', error);
-          // Continue with the request without custom fields
+          console.error('Error processing fields:', error);
+          // Continue with the request without the problematic fields
         }
       }
 
       return IssueService.createIssue(true, { fields });
     }, 'Error creating issue');
+  }
+
+  async updateIssue(issueKey: string, params: {
+    fields?: Record<string, any> | string;
+    update?: Record<string, any[]> | string;
+    notifyUsers?: boolean;
+  }) {
+    return handleApiOperation(() => {
+      const notifyUsersParam = params.notifyUsers === false ? 'false' : 'true';
+      
+      // Create the request body
+      const requestBody: Record<string, any> = {};
+      
+      // Handle fields
+      if (params.fields) {
+        try {
+          // Parse fields if it's a string
+          const fieldsObj = typeof params.fields === 'string'
+            ? JSON.parse(params.fields)
+            : params.fields;
+          
+          // Only add the fields property if there are fields to update
+          if (Object.keys(fieldsObj).length > 0) {
+            requestBody.fields = fieldsObj;
+          }
+        } catch (error) {
+          console.error('Error processing fields:', error);
+          // Continue with the request without the problematic fields
+        }
+      }
+      
+      // Handle update operations
+      if (params.update) {
+        try {
+          // Parse update if it's a string
+          const updateObj = typeof params.update === 'string'
+            ? JSON.parse(params.update)
+            : params.update;
+          
+          // Add update operations if provided
+          if (Object.keys(updateObj).length > 0) {
+            requestBody.update = updateObj;
+          }
+        } catch (error) {
+          console.error('Error processing update operations:', error);
+          // Continue with the request without the update operations
+        }
+      }
+      
+      return IssueService.editIssue(issueKey, notifyUsersParam, requestBody);
+    }, 'Error updating issue');
   }
 
   static validateConfig(): string[] {
@@ -114,9 +157,21 @@ export const jiraToolSchemas = {
     summary: z.string().describe("Issue summary"),
     description: z.string().describe("Issue description in the format suitable for JIRA DATA CENTER edition (JIRA Wiki Markup)."),
     issueTypeId: z.string().describe("Issue type id (e.g. id of Task, Bug, Story). Should be found first a correct number for specific JIRA installation."),
-    customFields: z.union([
-      z.record(z.any()).optional().describe("Custom fields in the format of { fieldId: value } where fieldId is the custom field ID (e.g., 'customfield_10001')"),
-      z.string().optional().describe("Custom fields as a JSON string in the format of { \"fieldId\": value } where fieldId is the custom field ID (e.g., 'customfield_10001')")
+    fields: z.union([
+      z.record(z.any()).optional().describe("Additional fields to set on the issue in the format of { fieldName: value }"),
+      z.string().optional().describe("Additional fields to set on the issue as a JSON string")
     ])
+  },
+  updateIssue: {
+    issueKey: z.string().describe("JIRA issue key (e.g., PROJ-123)"),
+    fields: z.union([
+      z.record(z.any()).optional().describe("Fields to update in the format of { fieldName: value }"),
+      z.string().optional().describe("Fields to update as a JSON string")
+    ]),
+    update: z.union([
+      z.record(z.array(z.any())).optional().describe("Operations to perform on fields in the format of { fieldName: [operations] }"),
+      z.string().optional().describe("Operations to perform on fields as a JSON string")
+    ]),
+    notifyUsers: z.boolean().optional().describe("Whether to notify users about the update. Defaults to true.")
   }
 };
