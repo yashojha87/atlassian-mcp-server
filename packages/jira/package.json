@@ -1,6 +1,6 @@
 {
   "name": "@atlassian-mcp-server/jira",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "main": "build/index.js",
   "type": "module",
   "bin": "./bin/run.js",

@@ -1,6 +1,6 @@
 {
   "name": "@atlassian-mcp-server/common",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "main": "build/index.js",
   "type": "module",
   "private": false,
