@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [Unreleased]
+
+### Features
+
+* **jira:** add support for custom fields in issue creation
+
 ## [0.6.2](https://github.com/yashojha87/atlassian-mcp-server/compare/v0.6.0...v0.6.2) (2025-06-03)
 
 **Note:** Version bump only for package @atlassian-mcp-server/jira
