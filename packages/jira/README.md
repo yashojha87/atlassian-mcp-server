@@ -116,6 +116,27 @@ Parameters:
 - `summary` (string, required): Issue summary
 - `description` (string, required): Issue description in format suitable for JIRA Data Center edition (JIRA Wiki Markup)
 - `issueTypeId` (string, required): ID of the issue type
+- `customFields` (object, optional): Custom fields in the format of { fieldId: value } where fieldId is the custom field ID (e.g., 'customfield_10001')
+
+Example with custom fields:
+```json
+{
+  "projectId": "PROJECT",
+  "summary": "Issue summary",
+  "description": "Issue description",
+  "issueTypeId": "10001",
+  "customFields": {
+    "customfield_10010": "Value for custom field 10010",
+    "customfield_10011": { "id": "10000" },
+    "customfield_10012": ["value1", "value2"]
+  }
+}
+```
+
+The format of custom field values depends on the field type:
+- Simple text/number fields: Use simple string or number values
+- Select/option fields: Use an object with an `id` property
+- Multi-select fields: Use an array of values or objects
 
 #### 5. jira_postIssueComment
 
