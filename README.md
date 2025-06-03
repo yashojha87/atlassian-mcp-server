@@ -30,7 +30,7 @@ Windows:
   "mcpServers": {
     "atlassian-jira-dc": {
       "command": "npx",
-      "args": ["-y", "@atlassian-dc-mcp/jira"],
+      "args": ["-y", "@atlassian-mcp-server/jira"],
       "env": {
         "JIRA_HOST": "your-jira-host",
         "JIRA_API_TOKEN": "your-token"
@@ -38,7 +38,7 @@ Windows:
     },
     "atlassian-confluence-dc": {
       "command": "npx",
-      "args": ["-y", "@atlassian-dc-mcp/confluence"],
+      "args": ["-y", "@atlassian-mcp-server/confluence"],
       "env": {
         "CONFLUENCE_HOST": "your-confluence-host",
         "CONFLUENCE_API_TOKEN": "your-token"
@@ -46,7 +46,7 @@ Windows:
     },
     "atlassian-bitbucket-dc": {
       "command": "npx",
-      "args": ["-y", "@atlassian-dc-mcp/bitbucket"],
+      "args": ["-y", "@atlassian-mcp-server/bitbucket"],
       "env": {
         "BITBUCKET_HOST": "your-bitbucket-host",
         "BITBUCKET_API_TOKEN": "your-token"
@@ -63,7 +63,7 @@ You can also use the alternative API base path configuration:
   "mcpServers": {
     "atlassian-jira-dc": {
       "command": "npx",
-      "args": ["-y", "@atlassian-dc-mcp/jira"],
+      "args": ["-y", "@atlassian-mcp-server/jira"],
       "env": {
         "JIRA_API_BASE_PATH": "https://your-jira-host/rest",
         "JIRA_API_TOKEN": "your-token"
@@ -71,7 +71,7 @@ You can also use the alternative API base path configuration:
     },
     "atlassian-confluence-dc": {
       "command": "npx",
-      "args": ["-y", "@atlassian-dc-mcp/confluence"],
+      "args": ["-y", "@atlassian-mcp-server/confluence"],
       "env": {
         "CONFLUENCE_API_BASE_PATH": "https://your-confluence-host/rest",
         "CONFLUENCE_API_TOKEN": "your-token"
@@ -79,7 +79,7 @@ You can also use the alternative API base path configuration:
     },
     "atlassian-bitbucket-dc": {
       "command": "npx",
-      "args": ["-y", "@atlassian-dc-mcp/bitbucket"],
+      "args": ["-y", "@atlassian-mcp-server/bitbucket"],
       "env": {
         "BITBUCKET_API_BASE_PATH": "https://your-bitbucket-host/rest",
         "BITBUCKET_API_TOKEN": "your-token"
@@ -159,7 +159,7 @@ This will install:
 To install a dependency for a specific package:
 
 ```bash
-npm install <package-name> --workspace=@atlassian-dc-mcp/jira
+npm install <package-name> --workspace=@atlassian-mcp-server/jira
 ```
 
 To install a dependency at the root level:
@@ -179,7 +179,7 @@ npm run build
 To build a specific package:
 
 ```bash
-npm run build --workspace=@atlassian-dc-mcp/jira
+npm run build --workspace=@atlassian-mcp-server/jira
 ```
 
 ### Running in Development Mode

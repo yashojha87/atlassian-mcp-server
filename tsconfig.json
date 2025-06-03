@@ -13,7 +13,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@atlassian-dc-mcp/*": ["packages/*/src"]
+      "@atlassian-mcp-server/*": ["packages/*/src"]
     }
   },
   "references": [

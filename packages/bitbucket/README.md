@@ -21,7 +21,7 @@ Windows:
   "mcpServers": {
     "atlassian-bitbucket-dc": {
       "command": "npx",
-      "args": ["-y", "@atlassian-dc-mcp/bitbucket"],
+      "args": ["-y", "@atlassian-mcp-server/bitbucket"],
       "env": {
         "BITBUCKET_HOST": "your-bitbucket-host",
         "BITBUCKET_API_TOKEN": "your-token"

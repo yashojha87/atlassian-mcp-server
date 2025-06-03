@@ -38,7 +38,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.4.0](https://github.com/b1ff/atlassian-dc-mcp/compare/v0.3.4...v0.4.0) (2025-05-03)
 
-**Note:** Version bump only for package @atlassian-dc-mcp/bitbucket
+**Note:** Version bump only for package @atlassian-mcp-server/bitbucket
 
 
 
@@ -46,7 +46,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.3.4](https://github.com/b1ff/atlassian-dc-mcp/compare/v0.3.3...v0.3.4) (2025-03-08)
 
-**Note:** Version bump only for package @atlassian-dc-mcp/bitbucket
+**Note:** Version bump only for package @atlassian-mcp-server/bitbucket
 
 
 
@@ -65,7 +65,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.2.0](https://github.com/b1ff/atlassian-dc-mcp/compare/v0.1.6...v0.2.0) (2025-03-02)
 
-**Note:** Version bump only for package @atlassian-dc-mcp/bitbucket
+**Note:** Version bump only for package @atlassian-mcp-server/bitbucket
 
 
 
@@ -84,7 +84,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.1.4](https://github.com/b1ff/atlassian-dc-mcp/compare/v0.1.3...v0.1.4) (2025-03-02)
 
-**Note:** Version bump only for package @atlassian-dc-mcp/bitbucket
+**Note:** Version bump only for package @atlassian-mcp-server/bitbucket
 
 
 
@@ -114,4 +114,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 0.1.1 (2025-03-02)
 
-**Note:** Version bump only for package @atlassian-dc-mcp/bitbucket
+**Note:** Version bump only for package @atlassian-mcp-server/bitbucket

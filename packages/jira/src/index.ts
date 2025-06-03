@@ -1,4 +1,4 @@
-import { connectServer, createMcpServer, formatToolResponse } from '@atlassian-dc-mcp/common';
+import { connectServer, createMcpServer, formatToolResponse } from '@atlassian-mcp-server/common';
 import { JiraService, jiraToolSchemas } from './jira-service.js';
 import * as process from 'node:process';
 

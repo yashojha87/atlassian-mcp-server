@@ -21,7 +21,7 @@ Windows:
   "mcpServers": {
     "atlassian-jira-dc": {
       "command": "npx",
-      "args": ["-y", "@atlassian-dc-mcp/jira"],
+      "args": ["-y", "@atlassian-mcp-server/jira"],
       "env": {
         "JIRA_HOST": "your-jira-host",
         "JIRA_API_TOKEN": "your-token"

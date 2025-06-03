@@ -1,4 +1,4 @@
-import { connectServer, createMcpServer, formatToolResponse } from '@atlassian-dc-mcp/common';
+import { connectServer, createMcpServer, formatToolResponse } from '@atlassian-mcp-server/common';
 import dotenv from 'dotenv';
 import { BitbucketService, bitbucketToolSchemas } from './bitbucket-service.js';
 

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { handleApiOperation } from '@atlassian-dc-mcp/common';
+import { handleApiOperation } from '@atlassian-mcp-server/common';
 import { IssueService, OpenAPI, SearchService } from './jira-client/index.js';
 
 export class JiraService {

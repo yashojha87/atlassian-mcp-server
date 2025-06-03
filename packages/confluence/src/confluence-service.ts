@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { ContentResourceService, OpenAPI, SearchService } from './confluence-client/index.js';
-import { handleApiOperation } from '@atlassian-dc-mcp/common';
+import { handleApiOperation } from '@atlassian-mcp-server/common';
 
 export interface ConfluenceContent {
   id?: string;

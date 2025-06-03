@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { OpenAPI, ProjectService, PullRequestsService, RepositoryService } from './bitbucket-client/index.js';
-import { handleApiOperation } from '@atlassian-dc-mcp/common';
+import { handleApiOperation } from '@atlassian-mcp-server/common';
 
 export class BitbucketService {
   constructor(host: string, token: string, fullBaseUrl?: string) {
